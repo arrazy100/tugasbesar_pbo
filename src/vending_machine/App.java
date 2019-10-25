@@ -19,7 +19,6 @@ public abstract class App extends javax.swing.JFrame {
     public App() {
         initComponents();
         initMainmenu();
-        ubahJudul("Simulasi Vending Machine");
         setVisible(true);
         setResizable(false);
 

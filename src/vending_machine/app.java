@@ -6,6 +6,7 @@
 package vending_machine;
 
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,9 +15,10 @@ import javax.swing.JOptionPane;
  */
 public class app {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         
         AppImplements main_app = new AppImplements();
+        main_app.ubahJudul("Simulasi Vending Machine");
         
         // implementasi kelas abstrak login_admin
         login_admin la = new login_admin() {
@@ -35,6 +37,9 @@ public class app {
                 try { //exception handling
                     if (user.equalsIgnoreCase(getUsername()) && pass.equalsIgnoreCase(getPassword())) {
                         System.out.println("login berhasil");
+                        main_app.getKartu().show(main_app.getPanel(), "database_admin");
+                        main_app.ubahJudul("Database Admin");
+                        main_app.ubahUkuran(725, 480);
                     } else {
                         javax.swing.JOptionPane.showMessageDialog(null, "Maaf user atau password anda salah");
                         emptyField();
@@ -54,6 +59,9 @@ public class app {
             }
         };
         
+        database_admin da = new database_admin();
+        
         main_app.tambahPanel(la, "login_admin");
+        main_app.tambahPanel(da, "database_admin");
     }
 }

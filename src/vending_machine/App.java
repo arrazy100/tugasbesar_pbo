@@ -19,7 +19,6 @@ public abstract class App extends javax.swing.JFrame {
     public App() {
         initComponents();
         initMainmenu();
-        tambahPanel();
         ubahJudul("Simulasi Vending Machine");
         setVisible(true);
         setResizable(false);
@@ -62,8 +61,6 @@ public abstract class App extends javax.swing.JFrame {
     public abstract void bOkClicked(ActionEvent evt);
     public abstract void mLoginClicked(ActionEvent evt);
     public abstract void mMainmenuClicked(ActionEvent evt);
-    
-    public abstract void tambahPanel();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -200,6 +197,10 @@ public abstract class App extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_mKeluarActionPerformed
+    
+    public void tambahPanel(Container panel, String nama) {
+        AppPanel.add(panel, nama);
+    }
     
     public Container getPanel() {
         return AppPanel;

@@ -24,12 +24,14 @@ public abstract class login_admin extends javax.swing.JPanel {
     
     private void initLogin() {
         Login.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void actionPerformed(java.awt.event.MouseEvent evt) {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bLoginClicked(evt);
             }
         });
         Batal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void actionPerformed(java.awt.event.MouseEvent evt) {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bBatalClicked(evt);
             }
         });

@@ -6,7 +6,6 @@
 package vending_machine;
 
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,7 +44,7 @@ public abstract class login_admin extends javax.swing.JPanel {
     }
     
     public String getPassword() {
-        return jPasswordField1.getText();
+        return new String(jPasswordField1.getPassword());
     }
 
     /**
@@ -61,7 +60,6 @@ public abstract class login_admin extends javax.swing.JPanel {
         jPasswordField1 = new javax.swing.JPasswordField();
         Login = new javax.swing.JLabel();
         Batal = new javax.swing.JLabel();
-        Dragmouse = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(600, 600));
@@ -112,41 +110,16 @@ public abstract class login_admin extends javax.swing.JPanel {
         });
         add(Batal, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 394, 160, 45));
 
-        Dragmouse.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                DragmouseMouseDragged(evt);
-            }
-        });
-        Dragmouse.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                DragmouseMousePressed(evt);
-            }
-        });
-        add(Dragmouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 600));
-
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vending_machine/images/login.png"))); // NOI18N
+        background.setIcon(new ImageIcon("images/login.png"));
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 600));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void DragmouseMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DragmouseMouseDragged
-        int x = evt.getXOnScreen();
-        int y = evt.getYOnScreen();
-
-        this.setLocation(x-xmouse, y-ymouse);
-        System.out.println(x+","+y);
-    }//GEN-LAST:event_DragmouseMouseDragged
-
-    private void DragmouseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DragmouseMousePressed
-        xmouse = evt.getX();
-        ymouse = evt.getY();
-    }//GEN-LAST:event_DragmouseMousePressed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void LoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMousePressed
-        ImageIcon A = new ImageIcon(getClass().getResource("images/Login click.png"));
+        ImageIcon A = new ImageIcon("images/Login click.png");
         Login.setIcon(A);
     }//GEN-LAST:event_LoginMousePressed
 
@@ -162,34 +135,31 @@ public abstract class login_admin extends javax.swing.JPanel {
     }//GEN-LAST:event_LoginMouseExited
 
     private void LoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseEntered
-        ImageIcon A = new ImageIcon(getClass().getResource("images/Login enter.png"));
+        ImageIcon A = new ImageIcon("images/Login enter.png");
         Login.setIcon(A);
     }//GEN-LAST:event_LoginMouseEntered
 
     private void BatalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BatalMousePressed
-        ImageIcon A = new ImageIcon(getClass().getResource("images/Batal click.png"));
+        ImageIcon A = new ImageIcon("images/Batal click.png");
         Batal.setIcon(A);
     }//GEN-LAST:event_BatalMousePressed
 
     private void BatalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BatalMouseExited
-        ImageIcon A = new ImageIcon(getClass().getResource(""));
+        ImageIcon A = new ImageIcon("");
         Batal.setIcon(A);
     }//GEN-LAST:event_BatalMouseExited
 
     private void BatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BatalMouseEntered
-        ImageIcon A = new ImageIcon(getClass().getResource("images/Batal enter.png"));
+        ImageIcon A = new ImageIcon("images/Batal enter.png");
         Batal.setIcon(A);
     }//GEN-LAST:event_BatalMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Batal;
-    private javax.swing.JLabel Dragmouse;
     private javax.swing.JLabel Login;
     private javax.swing.JLabel background;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-    private int xmouse;
-    private int ymouse;
 }

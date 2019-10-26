@@ -5,6 +5,8 @@
  */
 package vending_machine;
 
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,7 +17,9 @@ import java.sql.Statement;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,6 +34,7 @@ public class database_admin extends javax.swing.JPanel {
      */
     public database_admin() throws SQLException {
         initComponents();
+        initButton();
         initDatabase();
     }
     
@@ -38,7 +43,7 @@ public class database_admin extends javax.swing.JPanel {
         Connection conn = null;
         try {
             // db parameters
-            String url = "jdbc:sqlite:src/vending_machine/databases/stok.db";
+            String url = "jdbc:sqlite:databases/stok.db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
@@ -47,12 +52,27 @@ public class database_admin extends javax.swing.JPanel {
         return conn;
     }
     
-    public void initDatabase() throws SQLException {
+    private void initButton() {
+        btn_restok = new ImageIcon("images/button_restok.png");
+        btn_restok_entered = new ImageIcon("images/button_restok_entered.png");
+    }
+    
+    private void initDatabase() throws SQLException {
         Connection conn = connect();
         
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM stok");
         jTable1.setModel(buildTableModel(rs));
+        jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTable1.setRowSelectionAllowed(false);
+        jTable1.setRowHeight(52);
+        
+        rs = stmt.executeQuery("SELECT kode_barang, nama_barang, MAX(pembelian) "
+                                + "FROM STOK WHERE kode_barang LIKE 'D-%'");
+        minumanTerlaku.setText(rs.getString("nama_barang"));
+        rs = stmt.executeQuery("SELECT kode_barang, nama_barang, MAX(pembelian) "
+                                + "FROM STOK WHERE kode_barang LIKE 'S-%'");
+        makananTerlaku.setText(rs.getString("nama_barang"));
     }
     
     public DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
@@ -75,7 +95,7 @@ public class database_admin extends javax.swing.JPanel {
             Vector<Object> vector = new Vector<Object>();
             for (int columnIndex = 1; columnIndex <= columnCount+1; columnIndex++) {
                 if (columnIndex == columnCount+1) {
-                    vector.add("Restok");
+                    vector.add(btn_restok);
                     break;
                 }
                 vector.add(rs.getObject(columnIndex));
@@ -87,6 +107,11 @@ public class database_admin extends javax.swing.JPanel {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
+            }
+            @Override
+            public Class<?> getColumnClass(int column) {
+                if (column == getColumnCount()-1) return ImageIcon.class;
+                else return Object.class;
             }
         };
     }
@@ -105,6 +130,11 @@ public class database_admin extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        minumanTerlaku = new javax.swing.JLabel();
+        makananTerlaku = new javax.swing.JLabel();
+
+        setMinimumSize(new java.awt.Dimension(725, 459));
+        setPreferredSize(new java.awt.Dimension(725, 459));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,6 +163,12 @@ public class database_admin extends javax.swing.JPanel {
             }
         });
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable1MouseReleased(evt);
+            }
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
             }
@@ -146,6 +182,10 @@ public class database_admin extends javax.swing.JPanel {
 
         jLabel3.setText("Makanan yang paling banyak dibeli:");
 
+        minumanTerlaku.setText("jLabel4");
+
+        makananTerlaku.setText("jLabel5");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -156,11 +196,17 @@ public class database_admin extends javax.swing.JPanel {
                         .addGap(0, 12, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 701, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(0, 308, Short.MAX_VALUE)))
+                        .addGap(150, 150, 150)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(minumanTerlaku))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(makananTerlaku)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -173,37 +219,58 @@ public class database_admin extends javax.swing.JPanel {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1)
                 .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jLabel2)
-                .addGap(74, 74, 74)
-                .addComponent(jLabel3)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(minumanTerlaku))
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(makananTerlaku))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        JTable target = (JTable)evt.getSource();
-        int row = target.getSelectedRow();
-        int col = target.getSelectedColumn();
-        String s;
-        if (col == 5) {
-            s = target.getModel().getValueAt(row, 0).toString();
-            System.out.println(s);
-            restok(s);
-            try {
-                initDatabase();
-            } catch (SQLException ex) {
-                Logger.getLogger(database_admin.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        int row = jTable1.rowAtPoint(evt.getPoint());
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String s = model.getValueAt(row, 0).toString();
+        restok(s);
+        try {
+            initDatabase();
+        } catch (SQLException ex) {
+            Logger.getLogger(database_admin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        // TODO add your handling code here:
+        int row = jTable1.rowAtPoint(evt.getPoint());
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setValueAt(btn_restok_entered, row, model.getColumnCount()-1);
+    }//GEN-LAST:event_jTable1MousePressed
+
+    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
+        // TODO add your handling code here:
+        int row = jTable1.rowAtPoint(evt.getPoint());
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setValueAt(btn_restok, row, model.getColumnCount()-1);
+    }//GEN-LAST:event_jTable1MouseReleased
     
     public void restok(String s) {
-        String sql = "UPDATE stok SET jumlah_barang = 99 WHERE kode_barang = ?";
+        String sql = "UPDATE stok SET jumlah_barang = jumlah_barang + ? WHERE kode_barang = ?";
+        String stok = javax.swing.JOptionPane.showInputDialog("Jumlah barang yang ingin ditambah:");
+        
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, s);
+            try {
+                pstmt.setLong(1, Long.parseLong(stok));
+            } catch (NumberFormatException e) {
+                System.out.println(e.getMessage());
+                pstmt.setLong(1, 0);
+            }
+            pstmt.setString(2, s);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -216,5 +283,9 @@ public class database_admin extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel makananTerlaku;
+    private javax.swing.JLabel minumanTerlaku;
     // End of variables declaration//GEN-END:variables
+    private ImageIcon btn_restok;
+    private ImageIcon btn_restok_entered;
 }

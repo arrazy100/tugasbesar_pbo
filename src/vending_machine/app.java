@@ -36,6 +36,7 @@ public class app {
 
                 try { //exception handling
                     if (user.equalsIgnoreCase(getUsername()) && pass.equalsIgnoreCase(getPassword())) {
+                        emptyField();
                         System.out.println("login berhasil");
                         main_app.getKartu().show(main_app.getPanel(), "database_admin");
                         main_app.ubahJudul("Database Admin");

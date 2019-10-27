@@ -38,14 +38,11 @@ public class app {
                     if (user.equalsIgnoreCase(getUsername()) && pass.equalsIgnoreCase(getPassword())) {
                         emptyField();
                         System.out.println("login berhasil");
-                        main_app.getKartu().show(main_app.getPanel(), "database_admin");
-                        main_app.ubahJudul("Database Admin");
-                        main_app.ubahUkuran(725, 480);
+                        main_app.ubahPanel("database_admin", "Database Admin", 725, 480);
                     } else {
                         javax.swing.JOptionPane.showMessageDialog(null, "Maaf user atau password anda salah");
                         emptyField();
                     }
-
                 }
                 catch(Exception e){ //exception handling
                     JOptionPane.showMessageDialog(this, e.getMessage());
@@ -54,9 +51,7 @@ public class app {
             
             @Override
             public void bBatalClicked(MouseEvent evt) {
-                main_app.getKartu().show(main_app.getPanel(), "card2");
-                main_app.ubahJudul("Simulasi Vending Machine");
-                main_app.ubahUkuran(640, 480);
+                main_app.ubahPanel("card2", "Simulasi Vending Machine", 640, 480);
             }
         };
         

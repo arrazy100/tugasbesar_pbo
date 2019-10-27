@@ -9,7 +9,6 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -57,6 +56,23 @@ public abstract class App extends javax.swing.JFrame {
         return daftarMesin.getSelectedIndex();
     }
     
+    public void ubahJudul(String s) {
+        super.setTitle(s);
+    }
+    
+    public void tambahPanel(Container panel, String nama) {
+        AppPanel.add(panel, nama);
+    }
+    
+    public void ubahPanel(String panel, String judul_window, int wWidth, int wHeight) {
+        cl.show(AppPanel, panel);
+        ubahJudul(judul_window);
+        
+        Dimension d = new Dimension(wWidth, wHeight);
+        setMinimumSize(d);
+        setSize(d);
+    }
+    
     public abstract void bKeluarClicked(ActionEvent evt);
     public abstract void bOkClicked(ActionEvent evt);
     public abstract void mLoginClicked(ActionEvent evt);
@@ -87,9 +103,10 @@ public abstract class App extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 480));
+        setSize(new java.awt.Dimension(640, 480));
 
         AppPanel.setMinimumSize(new java.awt.Dimension(640, 459));
-        AppPanel.setPreferredSize(new java.awt.Dimension(600, 400));
+        AppPanel.setPreferredSize(new java.awt.Dimension(640, 459));
         AppPanel.setLayout(new java.awt.CardLayout());
 
         main_menu.setPreferredSize(new java.awt.Dimension(600, 400));
@@ -188,33 +205,11 @@ public abstract class App extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    public void ubahJudul(String s) {
-        super.setTitle(s);
-    }
     
     private void mKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mKeluarActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_mKeluarActionPerformed
-    
-    public void tambahPanel(Container panel, String nama) {
-        AppPanel.add(panel, nama);
-    }
-    
-    public Container getPanel() {
-        return AppPanel;
-    }
-    
-    public CardLayout getKartu() {
-        return cl;
-    }
-    
-    public void ubahUkuran(int width, int height) {
-        d = new Dimension(width, height);
-        setMinimumSize(d);
-        setSize(d);
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AppPanel;

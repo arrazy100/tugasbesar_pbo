@@ -110,7 +110,7 @@ public abstract class login_admin extends javax.swing.JPanel {
         });
         add(Batal, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 394, 160, 45));
 
-        background.setIcon(new ImageIcon("images/login.png"));
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vending_machine/images/login.png"))); // NOI18N
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 600));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -135,22 +135,22 @@ public abstract class login_admin extends javax.swing.JPanel {
     }//GEN-LAST:event_LoginMouseExited
 
     private void LoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseEntered
-        ImageIcon A = new ImageIcon("images/Login enter.png");
+        ImageIcon A = new ImageIcon(getClass().getResource("images/Login enter.png"));
         Login.setIcon(A);
     }//GEN-LAST:event_LoginMouseEntered
 
     private void BatalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BatalMousePressed
-        ImageIcon A = new ImageIcon("images/Batal click.png");
+        ImageIcon A = new ImageIcon(getClass().getResource("images/Batal click.png"));
         Batal.setIcon(A);
     }//GEN-LAST:event_BatalMousePressed
 
     private void BatalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BatalMouseExited
-        ImageIcon A = new ImageIcon("");
+        ImageIcon A = new ImageIcon(getClass().getResource(""));
         Batal.setIcon(A);
     }//GEN-LAST:event_BatalMouseExited
 
     private void BatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BatalMouseEntered
-        ImageIcon A = new ImageIcon("images/Batal enter.png");
+        ImageIcon A = new ImageIcon(getClass().getResource("images/Batal enter.png"));
         Batal.setIcon(A);
     }//GEN-LAST:event_BatalMouseEntered
 

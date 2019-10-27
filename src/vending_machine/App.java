@@ -107,7 +107,7 @@ public abstract class App extends javax.swing.JFrame {
         bOk.setText("Ok");
 
         snack_icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        snack_icon.setIcon(new ImageIcon("images/snack.jpg"));
+        snack_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vending_machine/images/snack.jpg"))); // NOI18N
         snack_icon.setText("jLabel4");
         snack_icon.setPreferredSize(new java.awt.Dimension(64, 64));
 

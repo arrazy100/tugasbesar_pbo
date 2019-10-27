@@ -5,8 +5,6 @@
  */
 package vending_machine;
 
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -53,8 +51,8 @@ public class database_admin extends javax.swing.JPanel {
     }
     
     private void initButton() {
-        btn_restok = new ImageIcon("images/button_restok.png");
-        btn_restok_entered = new ImageIcon("images/button_restok_entered.png");
+        btn_restok = new ImageIcon(getClass().getResource("images/button_restok.png"));
+        btn_restok_entered = new ImageIcon(getClass().getResource("images/button_restok_entered.png"));
     }
     
     private void initDatabase() throws SQLException {
@@ -73,6 +71,8 @@ public class database_admin extends javax.swing.JPanel {
         rs = stmt.executeQuery("SELECT kode_barang, nama_barang, MAX(pembelian) "
                                 + "FROM STOK WHERE kode_barang LIKE 'S-%'");
         makananTerlaku.setText(rs.getString("nama_barang"));
+        
+        conn.close();
     }
     
     public DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
@@ -267,11 +267,12 @@ public class database_admin extends javax.swing.JPanel {
             try {
                 pstmt.setLong(1, Long.parseLong(stok));
             } catch (NumberFormatException e) {
-                System.out.println(e.getMessage());
+                javax.swing.JOptionPane.showMessageDialog(null, "Hanya menerima input angka");
                 pstmt.setLong(1, 0);
             }
             pstmt.setString(2, s);
             pstmt.executeUpdate();
+            conn.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

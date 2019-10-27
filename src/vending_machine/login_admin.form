@@ -98,8 +98,8 @@
     </Component>
     <Component class="javax.swing.JLabel" name="background">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new ImageIcon(&quot;images/login.png&quot;)" type="code"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/vending_machine/images/login.png"/>
         </Property>
       </Properties>
       <Constraints>

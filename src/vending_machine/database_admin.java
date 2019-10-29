@@ -234,28 +234,34 @@ public class database_admin extends javax.swing.JPanel {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int row = jTable1.rowAtPoint(evt.getPoint());
+        int col = jTable1.columnAtPoint(evt.getPoint());
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         String s = model.getValueAt(row, 0).toString();
-        restok(s);
-        try {
-            initDatabase();
-        } catch (SQLException ex) {
-            Logger.getLogger(database_admin.class.getName()).log(Level.SEVERE, null, ex);
+        if (col == 5) {
+            restok(s);
+            try {
+                initDatabase();
+            } catch (SQLException ex) {
+                Logger.getLogger(database_admin.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         // TODO add your handling code here:
         int row = jTable1.rowAtPoint(evt.getPoint());
+        int col = jTable1.columnAtPoint(evt.getPoint());
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setValueAt(btn_restok_entered, row, model.getColumnCount()-1);
+        if (col == 5) model.setValueAt(btn_restok_entered, row, model.getColumnCount()-1);
     }//GEN-LAST:event_jTable1MousePressed
 
     private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
         // TODO add your handling code here:
         int row = jTable1.rowAtPoint(evt.getPoint());
+        int col = jTable1.columnAtPoint(evt.getPoint());
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setValueAt(btn_restok, row, model.getColumnCount()-1);
+        if (col == 5) model.setValueAt(btn_restok, row, model.getColumnCount()-1);
     }//GEN-LAST:event_jTable1MouseReleased
     
     public void restok(String s) {

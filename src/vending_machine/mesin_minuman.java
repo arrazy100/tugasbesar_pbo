@@ -18,7 +18,7 @@ public class mesin_minuman extends mesin_makanan {
     @Override
     public String data_makanan() {
         String sql = "SELECT kode_barang, nama_barang, gambar, harga_barang FROM stok "
-                    + "WHERE kode_barang LIKE 'D-%'";
+                    + "WHERE kode_barang LIKE 'D-%' AND jumlah_barang > 0";
         
         return sql;
     }

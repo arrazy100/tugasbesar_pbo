@@ -7,6 +7,7 @@ package vending_machine;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.Icon;
 
@@ -20,9 +21,11 @@ public class mesin_makanan extends mesin {
     private long hargaBarang = 0;
     private Icon outputBarang;
     public String dataBarang;
+    public String kodeBarang;
     
     public mesin_makanan() {
         dataBarang = data_makanan();
+        kodeBarang = "";
     }
     
     public Connection connect() {
@@ -41,7 +44,7 @@ public class mesin_makanan extends mesin {
     
     public String data_makanan() {
         String sql = "SELECT kode_barang, nama_barang, gambar, harga_barang FROM stok "
-                    + "WHERE kode_barang LIKE 'S-%'";
+                    + "WHERE kode_barang LIKE 'S-%' AND jumlah_barang > 0";
         
         return sql;
     }
@@ -69,14 +72,28 @@ public class mesin_makanan extends mesin {
         return hargaBarang;
     }
     
-    public void setBarang(javax.swing.JLabel gambar, long harga) {
+    public void setBarang(String kode, javax.swing.JLabel gambar, long harga) {
+        kodeBarang = kode;
         outputBarang = gambar.getIcon();
         hargaBarang = harga;
+    }
+    
+    public void tambahPembelian() {
+        String sql = "UPDATE stok SET pembelian = pembelian + 1, jumlah_barang = jumlah_barang - 1 WHERE kode_barang = ?";
+        
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, kodeBarang);
+            pstmt.executeUpdate();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
     
     public void reset() {
         uangMasuk = 0;
         hargaBarang = 0;
         outputBarang = null;
+        kodeBarang = "";
     }
 }

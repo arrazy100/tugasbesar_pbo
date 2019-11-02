@@ -24,6 +24,7 @@ public class panel_mesin extends javax.swing.JPanel {
     /**
      * Creates new form panel_mesin
      */
+    
     public panel_mesin(int kategori) {
         initComponents();
         try {
@@ -31,10 +32,10 @@ public class panel_mesin extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(panel_mesin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        initButton();
+        initButton(kategori);
     }
     
-    private void initMesin(int kategori) throws SQLException {
+    public void initMesin(int kategori) throws SQLException {
         if (kategori == 0) {
             mM = new mesin_makanan();
         } else {
@@ -59,9 +60,9 @@ public class panel_mesin extends javax.swing.JPanel {
         
         int height = (barang.size() / 2 + 1) * 160;
         panelBarang.setPreferredSize(new Dimension(panelBarang.getWidth(), height));
+        panelBarang.removeAll();
 
         for (int i=0; i<barang.size(); i++) {
-            
             javax.swing.JLabel snack = kode_barang.elementAt(i);
             snack.setIcon(barang.elementAt(i));
             snack.setBounds((i%2)*130, (i/2)*160, 120, 120);
@@ -74,7 +75,7 @@ public class panel_mesin extends javax.swing.JPanel {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     if (mM.getHarga() == 0) {
-                        mM.setBarang(snack, harga);
+                        mM.setBarang(snack.getText(), snack, harga);
                         hrg.setText(harga + "");
                     } else {
                         javax.swing.JOptionPane.showMessageDialog(null, "Hanya bisa memilih 1 barang, klik tombol reset untuk mengulang pilihan!");
@@ -88,7 +89,7 @@ public class panel_mesin extends javax.swing.JPanel {
         conn.close();
     }
     
-    private void initButton() {
+    private void initButton(int kategori) {
         lKeluaran.setIcon(null);
         
         bOutput.addActionListener(new java.awt.event.ActionListener() {
@@ -103,6 +104,12 @@ public class panel_mesin extends javax.swing.JPanel {
                     } else if(lKeluaran.getIcon() == null) {
                         lKembalian.setText(mM.kembalian() + "");
                         lKeluaran.setIcon(mM.keluarkan());
+                        mM.tambahPembelian();
+                        try {
+                            initMesin(kategori);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(panel_mesin.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     } else {
                         javax.swing.JOptionPane.showMessageDialog(null, "Barang sudah dikeluarkan, klik tombol reset untuk memilih barang lagi!");
                     }

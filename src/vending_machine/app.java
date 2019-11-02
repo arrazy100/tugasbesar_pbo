@@ -16,9 +16,11 @@ import javax.swing.JOptionPane;
 public class app {
     
     public static void main(String[] args) throws SQLException {
+        admin da = new admin();
+        panel_mesin ms = new panel_mesin(0);
+        panel_mesin mm = new panel_mesin(1);
         
-        AppImplements main_app = new AppImplements();
-        main_app.ubahJudul("Simulasi Vending Machine");
+        AppImplements main_app = new AppImplements(da, ms, mm);
         
         // implementasi kelas abstrak login_admin
         login_admin la = new login_admin() {
@@ -55,10 +57,7 @@ public class app {
             }
         };
         
-        admin da = new admin();
-        panel_mesin ms = new panel_mesin(0);
-        panel_mesin mm = new panel_mesin(1);
-        
+        main_app.ubahJudul("Simulasi Vending Machine");
         main_app.tambahPanel(la, "login_admin");
         main_app.tambahPanel(da, "database_admin");
         main_app.tambahPanel(ms, "mesin_snack");

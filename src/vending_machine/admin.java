@@ -64,7 +64,7 @@ public class admin extends javax.swing.JPanel {
         btn_restok_entered = new ImageIcon(getClass().getResource("images/button_restok_entered.png"));
     }
     
-    private void initDatabase() throws SQLException {
+    public void initDatabase() throws SQLException {
         Connection conn = connect();
         
         Statement stmt = conn.createStatement();
@@ -74,16 +74,21 @@ public class admin extends javax.swing.JPanel {
         jTable1.setRowSelectionAllowed(false);
         jTable1.setRowHeight(52);
         
-        rs = stmt.executeQuery("SELECT nama_barang, gambar, MAX(pembelian) "
+        ResultSet rs_m = stmt.executeQuery("SELECT nama_barang, gambar, MAX(pembelian) "
                                 + "FROM STOK WHERE kode_barang LIKE 'D-%'");
         minumanTerlaku.setText(rs.getString("nama_barang"));
+        ImageIcon dc = new ImageIcon("images/" + rs_m.getObject(2));
+        dc.getImage().flush();
+        drink_icon.setIcon(dc);
         drink_icon.setText("a");
-        drink_icon.setIcon(new ImageIcon("images/" + rs.getString("gambar")));
-        rs = stmt.executeQuery("SELECT nama_barang, gambar, MAX(pembelian) "
+        
+        ResultSet rs_s = stmt.executeQuery("SELECT nama_barang, gambar, MAX(pembelian) "
                                 + "FROM STOK WHERE kode_barang LIKE 'S-%'");
         makananTerlaku.setText(rs.getString("nama_barang"));
+        ImageIcon sc = new ImageIcon("images/" + rs_s.getObject(2));
+        sc.getImage().flush();
+        snack_icon.setIcon(sc);
         snack_icon.setText("a");
-        snack_icon.setIcon(new ImageIcon("images/" + rs.getString("gambar")));
         
         conn.close();
     }
@@ -249,10 +254,14 @@ public class admin extends javax.swing.JPanel {
 
         makananTerlaku.setText("jLabel5");
 
+        drink_icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         drink_icon.setText("Minuman");
+        drink_icon.setMinimumSize(new java.awt.Dimension(120, 120));
         drink_icon.setPreferredSize(new java.awt.Dimension(120, 120));
 
+        snack_icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         snack_icon.setText("Makanan");
+        snack_icon.setMinimumSize(new java.awt.Dimension(120, 120));
         snack_icon.setPreferredSize(new java.awt.Dimension(120, 120));
 
         bTambahbarang.setText("Tambah");
@@ -408,6 +417,15 @@ public class admin extends javax.swing.JPanel {
             iHarga_barang.setText(model.getValueAt(row, 2).toString());
             iJumlah_barang.setText(model.getValueAt(row, 3).toString());
             iGambar.setCurrentDirectory(new File(System.getProperty("user.dir") + "/images"));
+            
+            String curDir = System.getProperty("user.dir") + "/images";
+            if (iKategori_barang.getSelectedIndex() == 0) {
+                iGambar.setSelectedFile(new File(curDir + "/S-" + iKode_barang.getText() + ".png"));
+            } else {
+                iGambar.setSelectedFile(new File(curDir + "/D-" + iKode_barang.getText() + ".png"));
+            }
+            lFile.setText(iGambar.getSelectedFile() + "");
+            System.out.println(lFile.getText());
         } else if (col == 5) { //jika button restok diklik oleh mouse
             tambah_stok(s);
             try {
@@ -531,7 +549,7 @@ public class admin extends javax.swing.JPanel {
                     if (kategori == 0) {
                         pstmt.setString(1, "S-" + iKode_barang.getText());
                         pstmt.setString(6, "S-" + kodeTemp);
-                        pstmt.setString(5, "S-" + iKode_barang.getText());
+                        pstmt.setString(5, "S-" + iKode_barang.getText() + ".png");
                         File baru = new File("images/S-" + iKode_barang.getText() + ".png");
 
                         salinGambar(gambar_baru, baru);

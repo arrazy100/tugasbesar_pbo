@@ -64,6 +64,10 @@ public abstract class App extends javax.swing.JFrame {
         AppPanel.add(panel, nama);
     }
     
+    public Container getPanel() {
+        return AppPanel;
+    }
+    
     public void ubahPanel(String panel, String judul_window, int wWidth, int wHeight) {
         cl.show(AppPanel, panel);
         ubahJudul(judul_window);
@@ -117,7 +121,7 @@ public abstract class App extends javax.swing.JFrame {
         lPilihan.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lPilihan.setText("Pilihan:");
 
-        daftarMesin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mesin Makanan", "Mesin Minuman" }));
+        daftarMesin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mesin Snack", "Mesin Minuman" }));
 
         bKeluar.setText("Keluar");
 
@@ -227,5 +231,4 @@ public abstract class App extends javax.swing.JFrame {
     private javax.swing.JLabel snack_icon;
     // End of variables declaration//GEN-END:variables
     public CardLayout cl;
-    private Dimension d;
 }

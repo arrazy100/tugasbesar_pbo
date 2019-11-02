@@ -38,7 +38,7 @@ public class app {
                     if (user.equalsIgnoreCase(getUsername()) && pass.equalsIgnoreCase(getPassword())) {
                         emptyField();
                         System.out.println("login berhasil");
-                        main_app.ubahPanel("database_admin", "Database Admin", 725, 480);
+                        main_app.ubahPanel("database_admin", "Database Admin", 725, 621);
                     } else {
                         javax.swing.JOptionPane.showMessageDialog(null, "Maaf user atau password anda salah");
                         emptyField();
@@ -55,9 +55,13 @@ public class app {
             }
         };
         
-        database_admin da = new database_admin();
+        admin da = new admin();
+        panel_mesin ms = new panel_mesin(0);
+        panel_mesin mm = new panel_mesin(1);
         
         main_app.tambahPanel(la, "login_admin");
         main_app.tambahPanel(da, "database_admin");
+        main_app.tambahPanel(ms, "mesin_snack");
+        main_app.tambahPanel(mm, "mesin_minuman");
     }
 }

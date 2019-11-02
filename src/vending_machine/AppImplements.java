@@ -16,10 +16,9 @@ public class AppImplements extends App {
     @Override
     public void bOkClicked(ActionEvent evt) {
         if (getSelectedMesin() == 0) {
-            System.out.println("Anda memilih mesin makanan");
-            ubahPanel("login_admin", "Login Admin", 600, 600);
+            ubahPanel("mesin_snack", "Mesin Snack", 550, 590);
         } else if (getSelectedMesin() == 1) {
-            System.out.println("Anda memilih mesin minuman");
+            ubahPanel("mesin_minuman", "Mesin Minuman", 550, 590);
         }
     }
     

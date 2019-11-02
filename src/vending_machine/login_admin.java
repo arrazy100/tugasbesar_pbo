@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  */
 public abstract class login_admin extends javax.swing.JPanel {
 
-    /**
+    /*
      * Creates new form login_admin
      */
     public login_admin() {
